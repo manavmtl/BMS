@@ -87,6 +87,9 @@ class FeatureOneActivity : AppCompatActivity() {
                     }
                 }
 
+                Status.LOADING->{
+
+                }
                 else -> {
                     Unit
                 }
