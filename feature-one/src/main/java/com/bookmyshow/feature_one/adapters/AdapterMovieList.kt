@@ -46,8 +46,11 @@ class AdapterMovieList(private val onChildTimeClicked: (parentVenuePosition: Int
 
     fun updateData(venuesList: ArrayList<MovieListResponse.Venue>) {
         this.venuesList = venuesList
-        if (venuesList.isEmpty())
-            return
-        notifyItemRangeChanged(0, venuesList.size - 1)
+        notifyDataSetChanged()
+    }
+
+    fun updatePosition(position: Int, item: MovieListResponse.Venue) {
+        venuesList[position] = item
+        notifyItemChanged(position)
     }
 }

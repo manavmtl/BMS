@@ -6,7 +6,8 @@ data class MovieListResponse(
     data class Venue(
         val name: String,
         val showDate: String,
-        val showtimes: ArrayList<Showtime>
+        val showtimes: ArrayList<Showtime>,
+        var isSelected:Boolean=false
     ){
         data class Showtime(
             val showDateCode: Long,

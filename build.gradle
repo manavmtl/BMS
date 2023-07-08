@@ -3,10 +3,10 @@
 buildscript {
 
     ext {
-        compileSdk = 23
+        compileSdk = 34
         buildTools = '28.0.3'
-        minSdk = 23
-        targetSdk = 31
+        minSdk = 26
+        targetSdk = 34
 
         /*https://blog.jetbrains.com/kotlin/category/releases/*/
         kotlinVersion = '1.6.10'
