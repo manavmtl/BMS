@@ -3,6 +3,7 @@ package com.bookmyshow.feature_one
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bookmyshow.core.DialogLoader
@@ -40,11 +41,26 @@ class FeatureOneActivity : AppCompatActivity() {
         FeatureOneDaggerProvider.component.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_feature_one)
 
-        supportActionBar?.title=getString(R.string.movies_list)
+        setUpToolbar()
         initMoviesListAdapter()
         initDateAdapter()
         setObservers()
         getMoviesData()
+    }
+
+    private fun setUpToolbar() {
+        supportActionBar?.title=getString(R.string.movies_list)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home->{
+                onBackPressedDispatcher.onBackPressed()
+                return true
+            }
+        }
+        return false
     }
 
     private fun initDateAdapter() {
@@ -80,8 +96,8 @@ class FeatureOneActivity : AppCompatActivity() {
         childTimeItem: MovieListResponse.Venue.Showtime
     ) {
         val jsonObject=JSONObject()
-        jsonObject.put(TIME_SELECTED,childTimeItem)
-        jsonObject.put(PARENT_VENUE_ITEM,parentVenueItem)
+        jsonObject.put(TIME_SELECTED,childTimeItem.showTime)
+        jsonObject.put(PARENT_VENUE_ITEM,parentVenueItem.name)
 
         val intent=Intent(ACTION_TIME_CLICK)
         intent.putExtra(KEY_DATA,jsonObject.toString())
@@ -136,7 +152,7 @@ class FeatureOneActivity : AppCompatActivity() {
         binding.apply {
             progressCircular.gone()
             rvMoviesList.visible()
-            cardDatesFilter.gone()
+            cardDatesFilter.visible()
         }
     }
 
