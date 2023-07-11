@@ -21,7 +21,7 @@ class NetworkModule {
     }
 
     @Provides
-    fun getNetworkProvider(): NetworkProvider {
-        return NetworkProviderImpl()
+    fun getNetworkProvider(context: Context,networkManager: NetworkManager): NetworkProvider {
+        return NetworkProviderImpl(context, networkManager)
     }
 }

@@ -24,7 +24,7 @@ class FeatureOneViewModel @Inject constructor(private val repo: ShowTimesReposit
         repo.getMoviesList().onStart {
             _moviesData.value = ApiState.loading()
         }.catch {
-            _moviesData.value = ApiState.error("Something went wrong")
+            _moviesData.value = ApiState.error(it)
         }.collect {
             _moviesData.value = ApiState.success(it.data)
         }

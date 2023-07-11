@@ -1,6 +1,6 @@
 package com.bookmyshow.feature_one.networkState
 
-data class ApiState<out T>(val status: Status, val data: T?, val errorModel: String?) {
+data class ApiState<out T>(val status: Status, val data: T?, val errorModel: Throwable?) {
     companion object {
 
         // In case of Success,set status as
@@ -11,7 +11,7 @@ data class ApiState<out T>(val status: Status, val data: T?, val errorModel: Str
 
         // In case of failure ,set state to Error ,
         // add the error message,set data to null
-        fun <T> error(errorModel: String?): ApiState<T> {
+        fun <T> error(errorModel: Throwable): ApiState<T> {
             return ApiState(Status.ERROR, null, errorModel)
         }
 

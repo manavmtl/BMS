@@ -2,17 +2,18 @@ package com.bookmyshow.network.provider
 
 import android.content.Context
 import com.bookmyshow.core.NetworkManager
-import okhttp3.Interceptor
+import com.bookmyshow.network.utils.ConnectivityInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
+internal class NetworkProviderImpl @Inject constructor(
+    private val context: Context,
+    private val networkManager: NetworkManager
+) : com.bookmyshow.core.NetworkProvider {
 
     private companion object {
         const val CONNECT_TIMEOUT = 30L
@@ -21,9 +22,9 @@ internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
 
     private val okHttpClient: OkHttpClient
         get() = OkHttpClient.Builder()
+            .addInterceptor(ConnectivityInterceptor(context,networkManager))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//            .addInterceptor(ConnectivityInterceptor())
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .build()
@@ -40,15 +41,4 @@ internal class NetworkProviderImpl : com.bookmyshow.core.NetworkProvider {
             .create(apiClass) as ApiClass
     }
 
-  /* private inner class ConnectivityInterceptor () : Interceptor {
-       @Inject
-       lateinit var networkManager: NetworkManager
-       override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-           if (!networkManager.isNetworkConnected) {
-               throw IOException("No internet connection")
-           }
-
-           return chain.proceed(chain.request())
-       }
-   }*/
 }

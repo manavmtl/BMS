@@ -2,11 +2,12 @@ package com.bookmyshow.common_ui.imageloader
 
 import android.content.Context
 import android.widget.ImageView
+import com.bookmyshow.core.ImageLoader
 import com.squareup.picasso.Picasso
 
 class ImageLoaderImpl constructor(
     private val context: Context
-) : com.bookmyshow.core.ImageLoader {
+) : ImageLoader {
 
     private var picasso: Picasso = Picasso
         .Builder(context)

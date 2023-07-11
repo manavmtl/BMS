@@ -4,4 +4,6 @@
     <string name="dummy_time">12:15pm</string>
     <string name="filter">Filter</string>
     <string name="venues_list">Venues List</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="movies_list">Movies List</string>
 </resources>
